@@ -12,8 +12,8 @@ using NZWalks.API.Data;
 namespace NZWalks.API.Migrations.NZWalksAuthDb
 {
     [DbContext(typeof(NZWalksAuthDbContext))]
-    [Migration("20250804042231_Seeting Data Auth Database")]
-    partial class SeetingDataAuthDatabase
+    [Migration("20250804062739_Checking78")]
+    partial class Checking78
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

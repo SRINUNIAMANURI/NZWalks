@@ -13,21 +13,21 @@ namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RegionsController : ControllerBase
     {
         private NZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
-        private readonly IMapper mapper;
+       // private readonly IMapper mapper;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository)//, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
-            this.mapper = mapper;
+           // this.mapper = mapper;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public  async Task<IActionResult> GetAll()
         {
             // Database to domain model
@@ -38,21 +38,22 @@ namespace NZWalks.API.Controllers
             // domain model to Dto
             var regionDtos = new List<RegionDto>();
 
-            //foreach (var region in regions)
-            //{
-            //    regionDtos.Add(new RegionDto()
-            //    {
-            //        Id = region.Id,
-            //        Name = region.Name,
-            //        Code = region.Code,
-            //        RegionImageUrl = region.RegionImageUrl,
-            //    });
-            //}
+            foreach (var region in regions)
+            {
+                regionDtos.Add(new RegionDto()
+                {
+                    Id = region.Id,
+                    Name = region.Name,
+                    Code = region.Code,
+                    RegionImageUrl = region.RegionImageUrl,
+                });
+            }
 
-            return Ok(mapper.Map<List<RegionDto>>(regions));
+            return Ok((regions));
         }
 
         [HttpGet("Id")]
+        [Authorize(Roles = "Reader")]
         public IActionResult Get(int id)
         {
             var region = dbContext.Regions.FirstOrDefault(x => x.Id == id);
@@ -72,6 +73,7 @@ namespace NZWalks.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public IActionResult Create([FromBody] RegionInputDto regionInputDto)
         {
             //Map input dto to domain model
@@ -103,6 +105,7 @@ namespace NZWalks.API.Controllers
 
         [Route("{id:int}")]
         [HttpPut]
+        [Authorize(Roles = "Writer")]
         public IActionResult Update([FromRoute] int id, [FromBody] RegionInputDto regionInputDto)
         {
             // get domain model from db based on id
@@ -130,6 +133,7 @@ namespace NZWalks.API.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] int id, [FromBody] RegionInputDto regionInputDto)
         {
             var region = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);

@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace NZWalks.API.Migrations.NZWalksAuthDb
 {
     /// <inheritdoc />
-    public partial class CreatingAuthDatabase : Migration
+    public partial class Checking78 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -154,6 +156,15 @@ namespace NZWalks.API.Migrations.NZWalksAuthDb
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "5993E051-F7F1-4B89-93EA-E7F395461F9D", "5993E051-F7F1-4B89-93EA-E7F395461F9D", "readerId", "READERID" },
+                    { "EC11B02C-A2C6-4753-BC2F-DD32C4A95EF5", "EC11B02C-A2C6-4753-BC2F-DD32C4A95EF5", "writerId", "WRITERID" }
                 });
 
             migrationBuilder.CreateIndex(

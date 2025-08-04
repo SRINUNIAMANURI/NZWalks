@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NZWalks.API.Data
 {
-    public class NZWalksAuthDbContext : IdentityDbContext<IdentityUser>
+    public class NZWalksAuthDbContext : IdentityDbContext
     {
         public NZWalksAuthDbContext(DbContextOptions<NZWalksAuthDbContext> dbContext) : base(dbContext)
         {
@@ -23,16 +23,16 @@ namespace NZWalks.API.Data
                 new IdentityRole
                 {
                     Id = readerId,
-                    Name = "readerId",
+                    Name = "Reader",
                 ConcurrencyStamp = readerId,
-                NormalizedName = "readerId".ToUpper()
+                NormalizedName = "Reader".ToUpper()
                 },
                  new IdentityRole
                 {
                     Id = writerId,
-                    Name = "writerId",
+                    Name = "Writer",
                 ConcurrencyStamp = writerId,
-                NormalizedName = "writerId".ToUpper()
+                NormalizedName = "Writer".ToUpper()
                 },
             };
             builder.Entity<IdentityRole>().HasData(values);
